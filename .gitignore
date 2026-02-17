@@ -1,0 +1,46 @@
+# ----------------------------
+# IDE (Rider / IntelliJ)
+# ----------------------------
+.idea/
+shelf/
+workspace.xml
+modules.xml
+projectSettingsUpdater.xml
+contentModel.xml
+.idea.sprint-13-2024-2025_team2_palamarchuk_pustovar_chuprun.iml
+httpRequests/
+dataSources/
+dataSources.local.xml
+
+# ----------------------------
+# Visual Studio / .NET / ASP.NET Core
+# ----------------------------
+# Build results
+bin/
+obj/
+out/
+Debug/
+Release/
+x64/
+x86/
+[Aa]rtifacts/
+[Bb]uild/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ASP.NET specific
+wwwroot/lib/
+appsettings.Development.json
+
+# Logs
+*.log
+logs/
+*.tlog
+
+# Others
+Thumbs.db
+*.DS_Store
