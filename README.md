@@ -23,7 +23,17 @@ following fields, store the data into MS SQL database, and display stored data o
 3. Additional Features:
     * Implemented basic data validation and error handling.
 
+## How to run localy
 
+1. **Launch SQL Server in Docker:**
+   `docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=poleNuf123!" -p 1433:1433 --name sql_server --platform linux/amd64 -d mcr.microsoft.com/mssql/server:2022-latest`
+
+2. **Update database:**
+  `dotnet ef database update`
+
+3. **Run application:**
+   `dotnet run`
+   
 ## Screenshots
 
 ### Main Page
