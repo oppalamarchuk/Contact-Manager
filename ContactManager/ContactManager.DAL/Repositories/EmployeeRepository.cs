@@ -16,4 +16,15 @@ public class EmployeeRepository(ManagerDbContext context) : IEmployeeRepository
         await context.AddRangeAsync(employees);
         await context.SaveChangesAsync();
     }
+
+    public async Task DeleteEmployeeAsync(int id)
+    {
+        await context.Employees.Where(e => e.Id == id).ExecuteDeleteAsync();
+    }
+
+    public async Task UpdateEmployeeAsync(Employee employee)
+    {
+        context.Employees.Update(employee);
+        await context.SaveChangesAsync();
+    }
 }

@@ -1,3 +1,4 @@
+using ContactManager.BLL.DTOs;
 using ContactManager.BLL.IServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,5 +27,21 @@ public class EmployeeController(ICsvService csvService , IEmployeeService employ
         await employeeService.AddRangeEmployeeAsync(empDtos);
         
         return RedirectToAction(nameof(Index));
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete([FromBody]int id)
+    {
+        await employeeService.DeleteEmployeeAsync(id);
+
+        return Ok();
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] EmployeeDTO empDto)
+    {
+        await employeeService.UpdateEmployeeAsync(empDto);
+        
+        return Ok();
     }
 }

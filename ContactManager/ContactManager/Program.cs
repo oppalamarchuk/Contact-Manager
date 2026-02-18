@@ -17,9 +17,9 @@ public class Program
         builder.Services.AddControllersWithViews(); 
         builder.Services.AddDbContext<ManagerDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-        builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-        builder.Services.AddTransient<ICsvService, CsvService>();
-        builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+        builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+        builder.Services.AddScoped<ICsvService, CsvService>();
+        builder.Services.AddScoped<IEmployeeService, EmployeeService>();
         
        
         var app = builder.Build();
@@ -41,7 +41,7 @@ public class Program
 
         app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Employee}/{action=Index}/{id?}");
 
         app.Run();
     }

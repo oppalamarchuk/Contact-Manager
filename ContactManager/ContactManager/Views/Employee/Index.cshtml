@@ -15,38 +15,64 @@
 <table class="table mt-3" id="employeeTable">
     <thead>
     <tr>
-        <th onclick="sorted(0)">Name</th>
-        <th onclick="sorted(1)">Date of Birth</th>
-        <th onclick="sorted(2)">Married</th>
-        <th onclick="sorted(3)">Phone</th>
-        <th onclick="sorted(4)">Salary</th>
+        <th onclick="sorted(0)" style="cursor:pointer">Name</th>
+        <th onclick="sorted(1)" style="cursor:pointer">Date of Birth</th>
+        <th onclick="sorted(2)" style="cursor:pointer">Married</th>
+        <th onclick="sorted(3)" style="cursor:pointer">Phone</th>
+        <th onclick="sorted(4)" style="cursor:pointer">Salary</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody id="tableBody">
-    @{
-        foreach (var emp in Model)
-        {
-            <tr>
-                <td>@emp.Name</td>
-                <td>@emp.BirthDate</td>
-                <td>@emp.Married</td>
-                <td>@emp.Phone</td>
-                <td>@emp.Salary</td>
-            </tr>
-        }
+    @foreach (var emp in Model)
+    {
+        <tr data-id="@emp.Id">
+            <td>
+                <span class="view-mode">@emp.Name</span>
+                <input type="text" class="form-control edit-mode d-none" name="Name" value="@emp.Name"/>
+            </td>
+            <td>
+                <span class="view-mode">@emp.BirthDate.ToShortDateString()</span>
+                <input type="date" class="form-control edit-mode d-none" name="BirthDate"
+                       value="@emp.BirthDate.ToString("yyyy-MM-dd")"/>
+            </td>
+            <td>
+                <span class="view-mode">@(emp.Married ? "Yes" : "No")</span>
+                <input type="checkbox" class="form-check-input edit-mode d-none" name="Married"
+                       @(emp.Married ? "checked" : "")/>
+            </td>
+            <td>
+                <span class="view-mode">@emp.Phone</span>
+                <input type="text" class="form-control edit-mode d-none" name="Phone" value="@emp.Phone"/>
+            </td>
+            <td>
+                <span class="view-mode">@emp.Salary</span>
+                <input type="number" class="form-control edit-mode d-none" name="Salary"
+                       value="@emp.Salary.ToString(System.Globalization.CultureInfo.InvariantCulture)" min="0"/>
+            </td>
+            <td>
+                <button class="btn btn-outline-secondary edit-btn">Edit</button>
+                <button class="btn btn-outline-secondary delete-btn">Delete</button>
+                <button class="btn btn-success save-btn d-none">Save</button>
+                <button class="btn btn-danger cancel-btn d-none">Cancel</button>
+            </td>
+        </tr>
     }
     </tbody>
 </table>
 
 <script>
     let sortDirection = true;
+
     function sorted(columnIndex) {
+
         const tableBody = document.getElementById("tableBody");
         const rows = Array.from(tableBody.querySelectorAll("tr"));
+        rows.forEach((row) => toggleMode(row, false))
 
         const sortedRows = rows.sort((a, b) => {
-            let valA = a.children[columnIndex].innerText.trim();
-            let valB = b.children[columnIndex].innerText.trim();
+            let valA = a.cells[columnIndex].querySelector('.view-mode').innerText.trim();
+            let valB = b.cells[columnIndex].querySelector('.view-mode').innerText.trim();
 
             const numA = parseFloat(valA.replace(',', '.'));
             const numB = parseFloat(valB.replace(',', '.'));
@@ -70,5 +96,72 @@
         sortDirection = !sortDirection;
 
         tableBody.append(...sortedRows);
+    }
+
+    document.addEventListener('click', (e) => {
+        const row = e.target.closest('tr');
+        if (!row) return;
+
+        if (e.target.classList.contains('edit-btn')) {
+            toggleMode(row, true);
+        }
+
+        if (e.target.classList.contains('cancel-btn')) {
+            toggleMode(row, false);
+        }
+
+        if (e.target.classList.contains('delete-btn')) {
+            if (!confirm("Are you sure you want to delete this record?")) return;
+
+            const id = row.getAttribute('data-id');
+
+            fetch('/Employee/Delete', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(parseInt(id))
+            }).then(response => {
+                if (response.ok) row.remove();
+                else alert("Delete failed.");
+            });
+        }
+
+        if (e.target.classList.contains('save-btn')) {
+            const id = row.getAttribute('data-id');
+            const data = {
+                id: parseInt(id),
+                name: row.querySelector('[name="Name"]').value,
+                birthDate: row.querySelector('[name="BirthDate"]').value,
+                married: row.querySelector('[name="Married"]').checked,
+                phone: row.querySelector('[name="Phone"]').value,
+                salary: parseFloat(row.querySelector('[name="Salary"]').value)
+            };
+
+            fetch('/Employee/Update', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                if (response.ok) {
+                    row.cells[0].querySelector('.view-mode').innerText = data.name;
+                    row.cells[1].querySelector('.view-mode').innerText = data.birthDate;
+                    row.cells[2].querySelector('.view-mode').innerText = data.married ? "Yes" : "No";
+                    row.cells[3].querySelector('.view-mode').innerText = data.phone;
+                    row.cells[4].querySelector('.view-mode').innerText = data.salary;
+
+                    toggleMode(row, false);
+                } else {
+                    alert("Error saving data");
+                }
+            });
+        }
+    });
+
+    function toggleMode(row, isEdit) {
+        row.querySelectorAll('.view-mode, .edit-btn, .delete-btn').forEach(el => el.classList.toggle('d-none', isEdit));
+        row.querySelectorAll('.edit-mode, .save-btn, .cancel-btn').forEach(el => el.classList.toggle('d-none', !isEdit));
     }
 </script>

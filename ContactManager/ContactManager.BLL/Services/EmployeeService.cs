@@ -36,4 +36,23 @@ public class EmployeeService(IEmployeeRepository repository) : IEmployeeService
             
         await repository.AddRangeEmployeeAsync(employees);
     }
+
+    public async Task DeleteEmployeeAsync(int id)
+    {
+        await repository.DeleteEmployeeAsync(id);
+    }
+
+    public async Task UpdateEmployeeAsync(EmployeeDTO employeeDto)
+    {
+        var employee = new Employee()
+        {
+            Id = employeeDto.Id,
+            BirthDate = employeeDto.BirthDate,
+            Married = employeeDto.Married,
+            Name = employeeDto.Name,
+            Phone = employeeDto.Phone,
+            Salary = employeeDto.Salary
+        };
+        await repository.UpdateEmployeeAsync(employee);
+    }
 }
