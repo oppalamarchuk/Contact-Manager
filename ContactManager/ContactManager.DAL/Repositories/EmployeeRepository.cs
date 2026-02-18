@@ -31,11 +31,16 @@ public class EmployeeRepository(ManagerDbContext context, ILogger<EmployeeReposi
     public async Task DeleteEmployeeAsync(int id)
     {
         var deletedCount = await context.Employees.Where(e => e.Id == id).ExecuteDeleteAsync();
-        
+
         if (deletedCount > 0)
+        {
             logger.LogInformation("Employee {0} deleted", id);
+        }
         else
-            logger.LogWarning("Attempted to delete employee {0}, but they weren't found", id);
+        {
+            logger.LogError("Attempted to delete employee {0}, but they weren't found", id);
+            throw new KeyNotFoundException($"employee with id {id} weren't found");
+        }
     }
 
     public async Task UpdateEmployeeAsync(Employee employee)

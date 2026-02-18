@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ContactManager.Controllers;
 
-public class EmployeeController(ICsvService csvService , IEmployeeService employeeService) : Controller
+public class EmployeeController(
+    ICsvService csvService,
+    IEmployeeService employeeService,
+    ILogger<EmployeeController> logger) : Controller
 {
     [HttpGet]
     public async Task<IActionResult> Index()
@@ -33,9 +36,21 @@ public class EmployeeController(ICsvService csvService , IEmployeeService employ
     [HttpDelete]
     public async Task<IActionResult> Delete([FromBody]int id)
     {
-        await employeeService.DeleteEmployeeAsync(id);
-
-        return Ok();
+        try 
+        {
+            await employeeService.DeleteEmployeeAsync(id);
+            return Ok();
+        }
+        catch (KeyNotFoundException)
+        {
+            logger.LogError("Attempted to delete employee {0}, but they weren't found", id);
+            return NotFound($"Employee with ID {id} not found.");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error deleting employee {Id}", id);
+            return BadRequest("Could not delete employee.");
+        }
     }
 
     [HttpPut]
