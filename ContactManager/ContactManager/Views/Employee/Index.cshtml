@@ -1,7 +1,7 @@
 @model IEnumerable<ContactManager.BLL.DTOs.EmployeeDTO>
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Contact Manager";
     Layout = "_Layout";
 }
 
@@ -15,11 +15,11 @@
 <table class="table mt-3" id="employeeTable">
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Date of Birth</th>
-        <th>Married</th>
-        <th>Phone</th>
-        <th>Salary</th>
+        <th onclick="sorted(0)">Name</th>
+        <th onclick="sorted(1)">Date of Birth</th>
+        <th onclick="sorted(2)">Married</th>
+        <th onclick="sorted(3)">Phone</th>
+        <th onclick="sorted(4)">Salary</th>
     </tr>
     </thead>
     <tbody id="tableBody">
@@ -37,3 +37,38 @@
     }
     </tbody>
 </table>
+
+<script>
+    let sortDirection = true;
+    function sorted(columnIndex) {
+        const tableBody = document.getElementById("tableBody");
+        const rows = Array.from(tableBody.querySelectorAll("tr"));
+
+        const sortedRows = rows.sort((a, b) => {
+            let valA = a.children[columnIndex].innerText.trim();
+            let valB = b.children[columnIndex].innerText.trim();
+
+            const numA = parseFloat(valA.replace(',', '.'));
+            const numB = parseFloat(valB.replace(',', '.'));
+
+            if (!isNaN(numA) && !isNaN(numB)) {
+                return sortDirection ? numA - numB : numB - numA;
+            }
+
+            const dateA = Date.parse(valA);
+            const dateB = Date.parse(valB);
+
+            if (!isNaN(dateA) && !isNaN(dateB)) {
+                return sortDirection ? dateA - dateB : dateB - dateA;
+            }
+
+            return sortDirection
+                ? valA.localeCompare(valB)
+                : valB.localeCompare(valA);
+        });
+
+        sortDirection = !sortDirection;
+
+        tableBody.append(...sortedRows);
+    }
+</script>
