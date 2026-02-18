@@ -19,6 +19,7 @@ public class EmployeeController(ICsvService csvService , IEmployeeService employ
     {
         if (file == null || file.Length == 0)
         {
+            TempData["FileError"] = "Please select a file to upload";
             return RedirectToAction(nameof(Index));
         }
 

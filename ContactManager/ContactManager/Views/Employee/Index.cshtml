@@ -7,7 +7,10 @@
 
 <form asp-action="Upload" asp-controller="Employee" method="post" enctype="multipart/form-data">
     <div class="d-flex gap-2">
-        <input type="file" name="file" id="fileInput" accept=".csv" class="form-control" style="max-width: 300px;"/>
+        <div>
+            <input type="file" name="file" id="fileInput" accept=".csv" class="form-control" style="max-width: 300px;"/>
+            <p class="text-danger">@TempData["FileError"]</p>
+        </div>
         <button type="submit" class="btn btn-primary">Upload file</button>
     </div>
 </form>

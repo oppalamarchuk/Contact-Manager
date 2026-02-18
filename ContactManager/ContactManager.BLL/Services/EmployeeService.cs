@@ -2,6 +2,7 @@ using ContactManager.BLL.DTOs;
 using ContactManager.BLL.IServices;
 using ContactManager.DAL.Entities;
 using ContactManager.DAL.IRepositories;
+using Microsoft.Extensions.Logging;
 
 namespace ContactManager.BLL.Services;
 
@@ -53,6 +54,7 @@ public class EmployeeService(IEmployeeRepository repository) : IEmployeeService
             Phone = employeeDto.Phone,
             Salary = employeeDto.Salary
         };
+        
         await repository.UpdateEmployeeAsync(employee);
     }
 }
