@@ -22,3 +22,21 @@ following fields, store the data into MS SQL database, and display stored data o
       records from the database.
 3. Additional Features:
     * Implemented basic data validation and error handling.
+
+
+## Screenshots
+
+### Main Page
+![page](photos/Main-window.png)
+
+### Sorted by name
+![name](photos/Sorted%20by%20name.png)
+
+### Sorted by salary
+![salary](photos/Sorted%20by%20salary.png)
+
+### Inline Edit 
+![Inline Edit](photos/Inline%20Edit.png)
+
+### File Error
+![File Error](photos/File%20Error.png)
