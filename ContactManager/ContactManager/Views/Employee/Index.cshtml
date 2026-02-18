@@ -1,0 +1,39 @@
+@model IEnumerable<ContactManager.BLL.DTOs.EmployeeDTO>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<form asp-action="Upload" asp-controller="Employee" method="post" enctype="multipart/form-data">
+    <div class="d-flex gap-2">
+        <input type="file" name="file" id="fileInput" accept=".csv" class="form-control" style="max-width: 300px;"/>
+        <button type="submit" class="btn btn-primary">Upload file</button>
+    </div>
+</form>
+
+<table class="table mt-3" id="employeeTable">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Married</th>
+        <th>Phone</th>
+        <th>Salary</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody">
+    @{
+        foreach (var emp in Model)
+        {
+            <tr>
+                <td>@emp.Name</td>
+                <td>@emp.BirthDate</td>
+                <td>@emp.Married</td>
+                <td>@emp.Phone</td>
+                <td>@emp.Salary</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>

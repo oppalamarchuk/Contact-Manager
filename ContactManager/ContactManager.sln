@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactManager", "ContactManager\ContactManager.csproj", "{C7A8088B-B205-40FF-9A51-7B522A8B0D12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactManager.DAL", "ContactManager.DAL\ContactManager.DAL.csproj", "{C07986E3-F10C-4425-803F-B8151295D956}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactManager.BLL", "ContactManager.BLL\ContactManager.BLL.csproj", "{085E18A2-1A5E-494C-B995-FAD5F6E8F8B0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C7A8088B-B205-40FF-9A51-7B522A8B0D12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7A8088B-B205-40FF-9A51-7B522A8B0D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7A8088B-B205-40FF-9A51-7B522A8B0D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7A8088B-B205-40FF-9A51-7B522A8B0D12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C07986E3-F10C-4425-803F-B8151295D956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C07986E3-F10C-4425-803F-B8151295D956}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C07986E3-F10C-4425-803F-B8151295D956}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C07986E3-F10C-4425-803F-B8151295D956}.Release|Any CPU.Build.0 = Release|Any CPU
+		{085E18A2-1A5E-494C-B995-FAD5F6E8F8B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{085E18A2-1A5E-494C-B995-FAD5F6E8F8B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{085E18A2-1A5E-494C-B995-FAD5F6E8F8B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{085E18A2-1A5E-494C-B995-FAD5F6E8F8B0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
